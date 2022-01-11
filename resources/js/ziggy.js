@@ -1,0 +1,7 @@
+const Ziggy = {"url":"http:\/\/laravel-websocket.test","port":null,"defaults":{},"routes":{"dashboard":{"uri":"dashboard","methods":["GET","HEAD"]},"chats.index":{"uri":"chats","methods":["GET","HEAD"]},"chats.create":{"uri":"chats\/create","methods":["GET","HEAD"]},"chats.store":{"uri":"chats","methods":["POST"]},"chats.show":{"uri":"chats\/{chat}","methods":["GET","HEAD"]},"chats.edit":{"uri":"chats\/{chat}\/edit","methods":["GET","HEAD"]},"chats.update":{"uri":"chats\/{chat}","methods":["PUT","PATCH"]},"chats.destroy":{"uri":"chats\/{chat}","methods":["DELETE"]},"register":{"uri":"register","methods":["GET","HEAD"]},"login":{"uri":"login","methods":["GET","HEAD"]},"password.request":{"uri":"forgot-password","methods":["GET","HEAD"]},"password.email":{"uri":"forgot-password","methods":["POST"]},"password.reset":{"uri":"reset-password\/{token}","methods":["GET","HEAD"]},"password.update":{"uri":"reset-password","methods":["POST"]},"verification.notice":{"uri":"verify-email","methods":["GET","HEAD"]},"verification.verify":{"uri":"verify-email\/{id}\/{hash}","methods":["GET","HEAD"]},"verification.send":{"uri":"email\/verification-notification","methods":["POST"]},"password.confirm":{"uri":"confirm-password","methods":["GET","HEAD"]},"logout":{"uri":"logout","methods":["POST"]}}};
+
+if (typeof window !== 'undefined' && typeof window.Ziggy !== 'undefined') {
+    Object.assign(Ziggy.routes, window.Ziggy.routes);
+}
+
+export { Ziggy };
