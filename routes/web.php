@@ -25,9 +25,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['foo' => 'bar']);
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [ChatController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::resource('chats', ChatController::class)->middleware(['auth', 'verified']);
