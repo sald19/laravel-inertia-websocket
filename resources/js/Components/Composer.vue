@@ -38,7 +38,11 @@ export default {
         handleSubmit() {
             console.log("submit", this.message);
 
-            this.$inertia.post(route("chats.store"), { message: this.message });
+            // this.$inertia.post(route("chats.store"), { message: this.message });
+
+            axios.post(route("chats.store")).then((response) => {
+                console.log(response.data);
+            });
         },
     },
 };

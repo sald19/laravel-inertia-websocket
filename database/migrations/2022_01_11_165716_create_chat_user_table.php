@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessagesTable extends Migration
+class CreateChatUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +15,13 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('chat_user', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
+
+            $table->foreignIdFor(Chat::class);
+            $table->foreignIdFor(User::class);
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +32,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('chat_user');
     }
 }
