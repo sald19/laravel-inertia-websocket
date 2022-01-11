@@ -1,7 +1,9 @@
 require("./bootstrap");
 
 import { createApp, h } from "vue";
+
 import { ZiggyVue } from "ziggy";
+
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 
