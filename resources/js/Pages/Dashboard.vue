@@ -10,7 +10,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Chat class="h-96" />
+                <Chat class="h-96" :chats="chats" />
             </div>
         </div>
     </BreezeAuthenticatedLayout>
@@ -29,7 +29,7 @@ export default {
         Chat,
     },
 
-    props: ["foo"],
+    props: ["chats"],
 
     methods: {
         handleClick() {

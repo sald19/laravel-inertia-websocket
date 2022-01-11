@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ChatController extends Controller
 {
@@ -14,7 +16,12 @@ class ChatController extends Controller
      */
     public function index()
     {
-        
+        /** @var User $user . */
+        $user = Auth::user();
+
+        $chats = $user->chats()->with(['users', 'messages'])->get();
+
+        return Inertia::render('Dashboard', ['chats' => $chats]);
     }
 
     /**
@@ -35,12 +42,14 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        return Redirect::route('dashboard');
+        // return Redirect::route('dashboard');
 
         return [
             'id' => 1,
             'name' => 'test',
         ];
+
+        // 365275510
     }
 
     /**

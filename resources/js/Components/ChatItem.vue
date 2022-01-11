@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="flex-1 pl-1 mr-16">
-                <div class="font-medium">Jean Marc</div>
+                <div class="font-medium">{{ member.name }}</div>
                 <div class="text-gray-600 dark:text-gray-800 text-sm">
                     Developer
                 </div>
@@ -25,6 +25,23 @@
 
 <script>
 export default {
-    props: [],
+    props: {
+        chat: {
+            required: true,
+            type: Object,
+        },
+    },
+
+    computed: {
+        user() {
+            return this.$page.props.auth.user;
+        },
+
+        member() {
+            return this.chat.users.filter(
+                (member) => member.id !== this.user.id
+            )[0];
+        },
+    },
 };
 </script>

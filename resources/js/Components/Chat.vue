@@ -199,7 +199,7 @@
                 </div>
             </div>
             <div class="basis-1/3 bg-gray-200 border-l border-gray-300">
-                <ChatList />
+                <ChatList @onSelectChat="handleSelectedChat" :chats="chats" />
             </div>
         </div>
     </div>
@@ -211,12 +211,23 @@ import Composer from "@/Components/Composer.vue";
 import Message from "@/Components/Message.vue";
 
 export default {
-    props: {},
+    props: {
+        chats: {
+            type: Array,
+            required: true,
+        },
+    },
 
     components: {
         ChatList,
         Composer,
         Message,
+    },
+
+    methods: {
+        handleSelectedChat() {
+            console.log("handleSelectedChat");
+        },
     },
 
     mounted() {
