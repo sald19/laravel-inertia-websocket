@@ -3,9 +3,16 @@
         <div
             class="flex flex-row h-full p-x-6 bg-white border-b border-gray-200"
         >
+            <div class="basis-1/3 bg-gray-200 border-l border-gray-300">
+                <ChatList
+                    @onSelectChat="handleSelectedChat"
+                    :selected-chat-id="selectedChatId"
+                    :chats="chats"
+                />
+            </div>
             <div class="basis-2/3">
                 <div
-                    class="flex flex-col flex-grow w-full h-full max-w-xl overflow-hidden"
+                    class="flex flex-col flex-grow w-full h-full max-w overflow-hidden"
                 >
                     <div
                         class="flex flex-col flex-grow bg-gray-200 h-0 p-4 overflow-auto"
@@ -197,13 +204,6 @@
 
                     <Composer />
                 </div>
-            </div>
-            <div class="basis-1/3 bg-gray-200 border-l border-gray-300">
-                <ChatList
-                    @onSelectChat="handleSelectedChat"
-                    :selected-chat-id="selectedChatId"
-                    :chats="chats"
-                />
             </div>
         </div>
     </div>
