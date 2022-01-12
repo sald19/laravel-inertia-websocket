@@ -3,7 +3,7 @@
         <div
             class="flex flex-row h-full p-x-6 bg-white border-b border-gray-200"
         >
-            <div class="basis-1/3 bg-gray-200 border-l border-gray-300">
+            <div class="basis-1/3 bg-gray-200 border-r border-gray-300">
                 <ChatList
                     @onSelectChat="handleSelectedChat"
                     :selected-chat-id="selectedChatId"
