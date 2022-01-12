@@ -199,7 +199,11 @@
                 </div>
             </div>
             <div class="basis-1/3 bg-gray-200 border-l border-gray-300">
-                <ChatList @onSelectChat="handleSelectedChat" :chats="chats" />
+                <ChatList
+                    @onSelectChat="handleSelectedChat"
+                    :selected-chat-id="selectedChatId"
+                    :chats="chats"
+                />
             </div>
         </div>
     </div>
@@ -224,14 +228,21 @@ export default {
         Message,
     },
 
+    data() {
+        return {
+            selectedChatId: undefined,
+        };
+    },
+
     methods: {
         handleSelectedChat() {
             console.log("handleSelectedChat");
         },
     },
 
-    mounted() {
-        console.log("furulla furullera", route("chats.index"));
+    created() {
+        this.selectedChatId =
+            this.chats.length > 0 ? this.chats[0].id : undefined;
     },
 };
 </script>

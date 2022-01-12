@@ -1,6 +1,9 @@
 <template>
     <li
-        class="flex flex-row divide devide-y bg-white mb-2 rounded-md hover:bg-gray-100"
+        :class="{
+            [`outline outline-offset-2 outline-2 outline-blue-500`]: selected,
+        }"
+        class="flex flex-row divide devide-y bg-white m-2 rounded-md hover:bg-gray-100"
     >
         <div class="select-none cursor-pointer flex flex-1 items-center p-4">
             <div
@@ -40,6 +43,10 @@ export default {
         chat: {
             required: true,
             type: Object,
+        },
+        selected: {
+            required: true,
+            type: Boolean,
         },
     },
 

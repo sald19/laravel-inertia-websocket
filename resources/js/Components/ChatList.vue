@@ -2,6 +2,7 @@
     <ul class="container flex flex-col mx-auto w-full justify-center p-1">
         <chatItem
             :chat="chat"
+            :selected="chat.id === selectedChatId"
             @click="selectChat({ id: chat.id })"
             v-for="chat in chats"
         />
@@ -16,6 +17,10 @@ export default {
         chats: {
             required: true,
             type: Array,
+        },
+        selectedChatId: {
+            required: true,
+            type: [Number, undefined],
         },
     },
 
