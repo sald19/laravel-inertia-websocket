@@ -5,9 +5,9 @@
         >
             <div class="basis-1/3 bg-gray-200 border-r border-gray-300">
                 <ChatList
-                    @onSelectChat="handleSelectedChat"
-                    :selected-chat-id="selectedChatId"
                     :chats="chats"
+                    :selected-chat-id="selectedChatId"
+                    @onSelectChat="handleSelectedChat"
                 />
             </div>
             <div class="basis-2/3">
