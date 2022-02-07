@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ChatResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ class ChatController extends Controller
         $user = Auth::user();
 
         $chats = $user->chats()->with(['users', 'messages'])->get();
+
+        $chat = $chats->first();
 
         return Inertia::render('Dashboard', ['chats' => $chats]);
     }

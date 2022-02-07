@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +31,8 @@ Route::get('/dashboard', [ChatController::class, 'index'])->middleware(['auth', 
 
 
 Route::resource('chats', ChatController::class)->middleware(['auth', 'verified']);
+
+Route::resource('users', UserController::class);
 
 
 require __DIR__.'/auth.php';

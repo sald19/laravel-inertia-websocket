@@ -21203,14 +21203,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {},
+  props: {
+    chats: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     ChatList: _Components_ChatList_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Composer: _Components_Composer_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Message: _Components_Message_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  mounted: function mounted() {
-    console.log("furulla furullera", route("chats.index"));
+  data: function data() {
+    return {
+      selectedChatId: undefined
+    };
+  },
+  methods: {
+    handleSelectedChat: function handleSelectedChat() {
+      console.log("handleSelectedChat");
+    }
+  },
+  created: function created() {
+    this.selectedChatId = this.chats.length > 0 ? this.chats[0].id : undefined;
   }
 });
 
@@ -21228,7 +21243,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: []
+  props: {
+    chat: {
+      required: true,
+      type: Object
+    },
+    selected: {
+      required: true,
+      type: Boolean
+    }
+  },
+  computed: {
+    user: function user() {
+      return this.$page.props.auth.user;
+    },
+    member: function member() {
+      var _this = this;
+
+      return this.chat.users.filter(function (member) {
+        return member.id !== _this.user.id;
+      })[0];
+    }
+  }
 });
 
 /***/ }),
@@ -21247,9 +21283,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_ChatItem_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/ChatItem.vue */ "./resources/js/Components/ChatItem.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: {
+    chats: {
+      required: true,
+      type: Array
+    },
+    selectedChatId: {
+      required: true,
+      type: [Number, undefined]
+    }
+  },
   components: {
     ChatItem: _Components_ChatItem_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    selectChat: function selectChat(_ref) {
+      var id = _ref.id;
+      this.$emit("onSelectChat", id);
+    }
   }
 });
 
@@ -21311,7 +21362,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleSubmit: function handleSubmit() {
-      console.log("submit", this.message); // this.$inertia.post(route("chats"));
+      console.log("submit", this.message); // this.$inertia.post(route("chats.store"), { message: this.message });
+
+      axios.post(route("chats.store")).then(function (response) {
+        console.log(response.data);
+      });
     }
   }
 });
@@ -21963,7 +22018,7 @@ __webpack_require__.r(__webpack_exports__);
     Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Head,
     Chat: _Components_Chat_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ["foo"],
+  props: ["chats"],
   methods: {
     handleClick: function handleClick() {
       console.log("test");
@@ -22077,28 +22132,34 @@ var _hoisted_2 = {
   "class": "flex flex-row h-full p-x-6 bg-white border-b border-gray-200"
 };
 var _hoisted_3 = {
-  "class": "basis-2/3"
+  "class": "basis-1/3 bg-gray-200 border-r border-gray-300"
 };
 var _hoisted_4 = {
-  "class": "flex flex-col flex-grow w-full h-full max-w-xl overflow-hidden"
+  "class": "basis-2/3"
 };
 var _hoisted_5 = {
+  "class": "flex flex-col flex-grow w-full h-full max-w overflow-hidden"
+};
+var _hoisted_6 = {
   "class": "flex flex-col flex-grow bg-gray-200 h-0 p-4 overflow-auto"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><img alt=\"\" class=\"inline-block h-10 w-10 rounded-full ring-2 ring-white\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\"><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><img class=\"inline-block h-10 w-10 rounded-full ring-2 ring-white\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\" alt=\"\"></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div>", 9);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><img alt=\"\" class=\"inline-block h-10 w-10 rounded-full ring-2 ring-white\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\"><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><img class=\"inline-block h-10 w-10 rounded-full ring-2 ring-white\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\" alt=\"\"></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs\"><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div><div><div class=\"bg-green-200 p-3 rounded-r-lg rounded-bl-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div></div><div class=\"flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end\"><div><div class=\"bg-white text-gray-800 p-3 rounded-l-lg rounded-br-lg\"><p class=\"text-sm\"> Lorem ipsum dolor sit. </p></div><span class=\"text-xs text-gray-500 leading-none\">2 min ago</span></div><div class=\"flex-shrink-0 h-10 w-10 rounded-full bg-gray-300\"></div></div>", 9);
 
-var _hoisted_15 = {
-  "class": "basis-1/3 bg-gray-200 border-l border-gray-300"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ChatList = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ChatList");
+
   var _component_Message = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Message");
 
   var _component_Composer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Composer");
 
-  var _component_ChatList = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ChatList");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Message), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Composer)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ChatList)])])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ChatList, {
+    chats: $props.chats,
+    "selected-chat-id": $data.selectedChatId,
+    onOnSelectChat: $options.handleSelectedChat
+  }, null, 8
+  /* PROPS */
+  , ["chats", "selected-chat-id", "onOnSelectChat"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Message), _hoisted_7]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Composer)])])])]);
 }
 
 /***/ }),
@@ -22115,16 +22176,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 var _hoisted_1 = {
-  "class": "flex flex-row divide devide-y bg-white mb-2 rounded-md"
+  "class": "select-none cursor-pointer flex flex-1 items-center p-4"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"select-none cursor-pointer flex flex-1 items-center p-4\"><div class=\"flex flex-col w-10 h-10 justify-center items-center mr-4\"><a href=\"#\" class=\"block relative\"><img class=\"inline-block h-10 w-10 rounded-full ring-2 ring-white\" src=\"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80\" alt=\"\"></a></div><div class=\"flex-1 pl-1 mr-16\"><div class=\"font-medium\">Jean Marc</div><div class=\"text-gray-600 dark:text-gray-800 text-sm\"> Developer </div></div><div class=\"text-gray-600 dark:text-gray-800 text-xs\">6:00 AM</div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex flex-col w-10 h-10 justify-center items-center mr-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "relative inline-block"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "flex-shrink-0 h-10 w-10 rounded-full bg-gray-300",
+  src: "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  alt: "Profile image"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "absolute bottom-0 right-0 inline-block w-3 h-3 bg-green-600 border-2 border-white rounded-full"
+})])], -1
+/* HOISTED */
+);
 
-var _hoisted_3 = [_hoisted_2];
+var _hoisted_3 = {
+  "class": "flex-1 pl-1"
+};
+var _hoisted_4 = {
+  "class": "flex"
+};
+var _hoisted_5 = {
+  "class": "flex flex-1 text-sm font-semibold"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-gray-600 dark:text-gray-800 text-xs"
+}, " 6:00 AM ", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-gray-600 dark:text-gray-800 text-sm"
+}, " Developer ", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_1, _hoisted_3);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_defineProperty({}, "outline outline-offset-2 outline-2 outline-blue-500", $props.selected), "flex flex-row divide devide-y bg-white m-2 rounded-md hover:bg-gray-100"])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.member.name), 1
+  /* TEXT */
+  ), _hoisted_6]), _hoisted_7])])], 2
+  /* CLASS */
+  );
 }
 
 /***/ }),
@@ -22143,19 +22245,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "container flex flex-col mx-auto w-full items-center justify-center"
-};
-var _hoisted_2 = {
-  "class": "flex flex-col divide divide-y"
+  "class": "container flex flex-col mx-auto w-full justify-center p-1"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_chatItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("chatItem");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(4, function (n) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chatItem);
-  }), 64
-  /* STABLE_FRAGMENT */
-  ))])]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.chats, function (chat) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_chatItem, {
+      chat: chat,
+      selected: chat.id === $props.selectedChatId,
+      onClick: function onClick($event) {
+        return $options.selectChat({
+          id: chat.id
+        });
+      }
+    }, null, 8
+    /* PROPS */
+    , ["chat", "selected", "onClick"]);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))]);
 }
 
 /***/ }),
@@ -23517,8 +23626,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chat, {
-        "class": "h-96"
-      })])])];
+        "class": "h-96",
+        chats: $props.chats
+      }, null, 8
+      /* PROPS */
+      , ["chats"])])])];
     }),
     _: 1
     /* STABLE */
